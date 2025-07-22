@@ -11,11 +11,40 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.WritableMap
+
+//TO BE REMOVED
 import com.sunmi.peripheral.printer.InnerPrinterCallback
 import com.sunmi.peripheral.printer.InnerPrinterManager
 import com.sunmi.peripheral.printer.InnerResultCallback
 import com.sunmi.peripheral.printer.SunmiPrinterService
 import com.sunmi.peripheral.printer.WoyouConsts
+
+
+//Z500
+import android.util.Log;
+import android.os.Handler;
+import android.os.Looper
+import android.os.Build;
+
+import android.content.Intent;
+
+//import android.content.Context;
+
+import com.ciontek.hardware.aidl.AidlErrorCodeV2;
+import com.ciontek.hardware.aidl.emv.EMVOptV2;
+import com.ciontek.hardware.aidl.ped.PedOpt;
+import com.ciontek.hardware.aidl.pinpad.PinpadOpt;
+import com.ciontek.hardware.aidl.print.PrinterOpt;
+import com.ciontek.hardware.aidl.readcard.ReadCardOptV2;
+import com.ciontek.hardware.aidl.sysCard.SysCardOpt;
+import com.ciontek.hardware.aidl.system.SysBaseOpt;
+import com.ciontek.hardware.aidl.tax.TaxOpt;
+
+import pos.paylib.posPayKernel;
+import pos.paylib.keypad.PinpadManage;
+
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 
 class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
@@ -32,6 +61,187 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
   companion object {
     const val NAME = "Z500PrinterLibrary"
   }
+
+  //Z500
+
+  const val PRINT_TEST: Int = 0
+  const val PRINT_UNICODE: Int = 1
+  const val PRINT_BMP: Int = 2
+  const val PRINT_BARCODE: Int = 4
+  const val PRINT_CYCLE: Int = 5
+  const val PRINT_LONGER: Int = 7
+  const val PRINT_OPEN: Int = 8
+
+  const val PRINT_LAB_SINGLE: Int = 9
+  const val PRINT_LAB_CONTINUE: Int = 10
+  const val PRINT_LAB_BAR: Int = 11
+  const val PRINT_LAB_BIT: Int = 12
+
+  const val voltage_level = 0
+  const val BatteryV = 0
+  const val mode_flag = 0
+
+
+  public var basicOpt: SysBaseOpt? = null
+  public var readCardOpt: ReadCardOptV2? = null
+  public var pinPadOpt: PinpadOpt? = null
+  public var pedOpt: PedOpt? = null
+  public var printerOpt: PrinterOpt? = null
+  public var emvOpt: EMVOptV2? = null
+  public var syscardOpt: SysCardOpt? = null
+  //public var mPosPyaKernel: posPayKernel? =
+  private var mPosPayKernel: posPayKernel? = null
+  public var taxOpt: TaxOpt? = null
+
+  public var isConnect: Boolean = false
+
+  public var content = "1234567890";
+
+  //private val listeners = ConcurrentHashMap.newKeySet<OnServiceConnectListener>()
+  private val listeners = mutableSetOf<OnServiceConnectListener>()
+  //private val handler: Handler = Handler()
+  private val handler: Handler by lazy {
+    Handler(Looper.getMainLooper())
+  }
+
+  //const val isSPNFC: Boolean = true
+
+  @ReactMethod
+  fun connectPayService(promise: Promise) {
+    try {
+      Log.d("500","MENSSSAAAAAAAAA")
+      //Log.println(Log.INFO, "SunmiPrinter", "Your debug message")
+      //android.util.Log.d("z500", "connectPayService() called with: promise = $promise")
+      Log.d("Z500", "connectPayService() called with: promise = $promise")
+      mPosPayKernel = posPayKernel.getInstance();
+      val context = reactApplicationContext.applicationContext
+      mPosPayKernel?.initPaySDK(context, mConnectCallback);
+      checkServiceConnectivity(3 * 1000);
+      promise.resolve(true)
+      Log.d("Z500","MENSSSAAAAAAAAA")
+      Log.d("Z500","isConnect = $isConnect")
+
+
+
+      //promise.resolve(mPosPayKernel)
+    } catch (e: Exception) {
+      promise.reject("Z500","connect PayService failed=> " + e.message)
+    }
+  }
+
+  /*
+  * No Promise...
+   */
+  @ReactMethod
+  fun connectPayServices() {
+    try {
+      Log.d("500","MENSSSAAAAAAAAA")
+      //Log.println(Log.INFO, "SunmiPrinter", "Your debug message")
+      //android.util.Log.d("z500", "connectPayService() called with: promise = $promise")
+
+      mPosPayKernel = posPayKernel.getInstance();
+      val context = reactApplicationContext.applicationContext
+      mPosPayKernel?.initPaySDK(context, mConnectCallback);
+      checkServiceConnectivity(3 * 1000);
+      Log.d("Z500","MENSSSAAAAAAAAA")
+      Log.d("Z500","isConnect = $isConnect")
+
+    } catch (e: Exception) {
+      Log.d("Z500","connectPayServices Failed " + e.message)
+    }
+  }
+
+  private val mConnectCallback = object : posPayKernel.ConnectCallback {
+    override fun onConnectPaySDK() {
+      Log.e("Z500", "onConnectPaySDK")
+      try {
+        isConnect = true
+        emvOpt = mPosPayKernel?.mEmvOpt
+        basicOpt = mPosPayKernel?.mBasicOpt
+        pinPadOpt = mPosPayKernel?.mPinpadOpt
+        readCardOpt = mPosPayKernel?.mReadcardOpt
+        pedOpt = mPosPayKernel?.mPedOpt
+        taxOpt = mPosPayKernel?.mTaxOpt
+        printerOpt = mPosPayKernel?.mPrintOpt
+        syscardOpt = mPosPayKernel?.mSysCardOpt
+
+        notifyServiceConnect();
+
+      } catch (e: Exception) {
+        Log.e("Z500 ERR", "Erro onConnectPaySDK " + e.printStackTrace())
+        e.printStackTrace()
+      }
+    }
+
+    override fun onDisconnectPaySDK() {
+      Log.e("Z500", "onDisconnectPaySDK")
+      isConnect = false
+      emvOpt = null
+      basicOpt = null
+      pinPadOpt = null
+      readCardOpt = null
+      pedOpt = null
+      taxOpt = null
+      printerOpt = null
+      syscardOpt = null
+
+      //checkServiceConnectivity(0)
+    }
+  }
+
+  /**
+   * 解绑支付SDK
+   * Unbind the service's SDK
+   */
+  fun disconnectPayService() {
+    Log.e("Z500", "start unbind payHardware service...")
+    mPosPayKernel?.destroyPaySDK()
+  }
+
+  private fun notifyServiceConnect() {
+    Log.d("Z500","Call notifyServiceConnect()")
+    handler.post {
+      listeners.forEach { listener ->
+        listener.onServiceConnect()
+      }
+    }
+  }
+
+
+  /**
+   * service连接成功回调接口
+   * Callback interface after successfully connecting to the service
+   */
+  interface OnServiceConnectListener {
+    /**
+     * service连接成功后回调方法(UI线程调用)
+     * Callback method after successfully connecting to the service(use for UI)
+     */
+    fun onServiceConnect()
+  }
+
+
+  @Override
+  fun onServiceConnect() {
+    Log.e("Z500-Demo", "bind service success")
+  }
+
+
+  /**
+   * 检查PayHardwareService是否连接
+   * Check if the service is connected
+   */
+  private fun checkServiceConnectivity(delayMillis: Long) {
+    Log.d("Z500","Call checkServiceConnectivity()")
+    handler.postDelayed({
+      if (!isConnect) {
+        connectPayServices()
+
+      }
+    }, delayMillis)
+  }
+
+  // FIM Z500
 
   @ReactMethod
   fun connect(promise: Promise) {
@@ -84,15 +294,81 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
     }
   }
 
+  //Z500
   @ReactMethod
   fun printerSelfChecking(promise: Promise) {
-    validatePrinterService(promise)
-    try {
-      val callback = makeInnerResultCallback(promise, "native#printSelfChecking() is failed.")
-      printerService?.printerSelfChecking(callback)
-    } catch (e: Exception) {
-      promise.reject("0", "native#printSelfChecking() is failed. " + e.message)
+    Log.e("Z500","printerSelfChecking promise: $promise")
+    //validatePrinterService(promise)
+    if (isConnect) {
+
+      //notifyServiceConnect()
+      Log.e("Z500", "WORKING..,,onConnectPaySDK")
+      printerOpt?.PrnInit()
+      Log.e("Z500","PrnCheckStatus")
+      var pStatus = printerOpt?.PrnCheckStatus()
+      Log.e("Z500"," mmmmm " + pStatus)
+      if (pStatus == 0) {
+        printerOpt?.PrnSetMode(0)
+        Log.e("Z500"," MODE SET 0")
+        //printerOpt?.PrnStr("(ISSUER):01020001")
+        //printerOpt?.PrnSetFont((byte) 24, (byte) 24, (byte) 0x00);
+        printerOpt?.PrnSetFont(24, 24, 0)
+        //printerOpt?.PrnStr("a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >? a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >? a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?a b c d e f g h i j k l m n o p q r s t u v w x z A B C D E F G H I J K L M N O P Q R S T U V W X Z 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * () _ + ~   [ ] , . / ; ' { } : : | < >?\n");
+
+        printerOpt?.PrnBarcode(content, 360, 120, "CODE_128");
+
+        printerOpt?.PrnStr("CODE_128 : " + content + "\n\n");
+        printerOpt?.PrnBarcode(content, 240, 240, "QR_CODE");
+        printerOpt?.PrnStr("QR_CODE : " + content + "\n\n");
+        printerOpt?.PrnStr("发卡行(ISSUER):01020001 工商银行\n");
+        printerOpt?.PrnStr("卡号(CARD NO):\n");
+        printerOpt?.PrnStr("    9558803602109503920\n");
+        printerOpt?.PrnStr("收单行(ACQUIRER):03050011民生银行\n");
+        printerOpt?.PrnStr("交易类型(TXN. TYPE):消费/SALE\n");
+        printerOpt?.PrnStr("卡有效期(EXP. DATE):2013/08\n");
+        printerOpt?.PrnStr("- - - - - - - - - - - - - - - -\n");
+        printerOpt?.PrnStr("                                         ");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+        printerOpt?.PrnStr("\n");
+
+        printerOpt?.PrnStart()
+        Log.e("Z500"," Fez print ut nao.... ")
+      } else if (pStatus == -1) {
+        RESULT_CODE = -1;
+        Log.e("Z500", "Lib_PrnCheckStatus fail, ret = " + pStatus);
+        promise.reject("Z500","Error, No Paper")
+        return;
+      } else if (ret == -2) {
+        RESULT_CODE = -1;
+        Log.e("Z500", "Lib_PrnCheckStatus fail, ret = " + pStatus);
+        promise.reject("Z500","Error, Printer Too Hot ");
+        return;
+      } else if (ret == -3) {
+        RESULT_CODE = -1;
+        //TO REVIEW
+        voltage_level = intent.getExtras().getInt("level");
+        Log.e("wbw", "current  = " + voltage_level);
+        BatteryV = intent.getIntExtra("voltage", 0);  //电池电压
+        Log.e("wbw", "BatteryV  = " + BatteryV);
+        Log.e("wbw", "V  = " + BatteryV * 2 / 100);
+        //	m_voltage = (int) (65+19*voltage_level/100); //放大十倍
+        //   Log.e("wbw","m_voltage  = " + m_voltage );
+
+        Log.e("Z500", "voltage = " + (BatteryV * 2));
+        promise.reject("Battery less :" + (BatteryV * 2));
+        return;
+      }
+
+    } else {
+      //Connect primeiro
+      promise.reject("Z500","printerSelfChecking() Falhou; Prepare primeiro...")
     }
+
   }
 
   @ReactMethod

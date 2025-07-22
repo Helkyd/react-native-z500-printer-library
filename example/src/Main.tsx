@@ -90,41 +90,18 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrepare = useCallback(async () => {
     try {
-      const isPrepared: boolean = await Z500PrinterLibrary.prepare()
-      console.log(`isPrepared is ${isPrepared}`)
-
-      const {
-        serialNumber,
-        printerVersion,
-        serviceVersion,
-        printerModal,
-        paperWidth,
-        pixelWidth,
-      } = await Z500PrinterLibrary.getPrinterInfo()
-      console.log(`serialNumber is ${serialNumber}`)
-      console.log(`printerVersion is ${printerVersion}`)
-      console.log(`serviceVersion is ${serviceVersion}`)
-      console.log(`printerModal is ${printerModal}`)
-      console.log(`paperWidth is ${paperWidth}`)
-      console.log(`pixelWidth is ${pixelWidth}`)
-
-      const printedLength = await Z500PrinterLibrary.getPrintedLength()
-      console.log(`printedLength is ${printedLength}`)
-
-      const { value, description } = await Z500PrinterLibrary.getPrinterState()
-      console.log(`getPrinterState is (${value}, ${description}).`)
-
-      toast.show('Prepare is OK')
+      console.log('On press prepareZ500')
+      console.log(await Z500PrinterLibrary.prepareZ500() )
     } catch (error) {
       console.warn(error)
-      toast.show(`Prepare is failed. ${error}`)
+      toast.show('ERRO prepareZ500 ${error}')
     }
   }, [toast])
 
   const onPressPrintSelfChecking = useCallback(async () => {
     try {
-      await Z500PrinterLibrary.printText('Print Self-Checking')
-      await Z500PrinterLibrary.lineWrap(1)
+      //await Z500PrinterLibrary.printText('Print Self-Checking')
+      //await Z500PrinterLibrary.lineWrap(1)
 
       await Z500PrinterLibrary.printSelfChecking()
       await Z500PrinterLibrary.lineWrap(1)

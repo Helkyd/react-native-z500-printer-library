@@ -99,4 +99,10 @@ dependencies {
 
   // https://mvnrepository.com/artifact/com.sunmi/printerlibrary
   implementation "com.sunmi:printerlibrary:1.0.23"
+
+  //Z500
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation files('libs/zxing-core-3.3.0.jar')
+  implementation files('libs/classes.jar')
+  //implementation files('libs/PayLib-debug.aar')
 }

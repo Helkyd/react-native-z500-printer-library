@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/keyboard_type5_background">
+
+    <TextView
+        android:id="@+id/keyboard5_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="308px"
+        android:layout_marginLeft="48px"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textSize="28px"
+        android:letterSpacing="-0.07"
+        android:textColor="#333F48" />
+
+    <vpos.keypad.Keyboard5PasswordEditText
+        android:id="@+id/keyboard5_pwdedt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0px"
+        android:background="@null"
+        android:layout_below="@id/keyboard5_amount"
+        android:layout_marginLeft="48px"
+        android:layout_marginTop="48px" />
+
+    <TextView
+        android:id="@+id/keyboard5_countwarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/keyboard5_amount"
+        android:letterSpacing="-0.07"
+        android:layout_marginTop="48px"
+        android:layout_marginLeft="48px"
+        android:textSize="28px"
+        android:textAllCaps="false"
+        android:textColor="#FF4343" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="720px"
+        android:layout_alignParentBottom="true">
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn1"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="1"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_marginTop="29px"
+            android:layout_marginLeft="48px"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn2"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="2"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_marginTop="29px"
+            android:layout_marginLeft="48px"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/keyboard5_btn1"/>
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn3"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="3"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_marginTop="29px"
+            android:layout_marginLeft="47px"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/keyboard5_btn2" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn4"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="4"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="48px"
+            android:layout_below="@id/keyboard5_btn1"
+            android:layout_marginTop="15px" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn5"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="5"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_below="@id/keyboard5_btn2"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@id/keyboard5_btn4"
+            android:layout_marginLeft="48px" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn6"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="6"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_below="@id/keyboard5_btn3"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@id/keyboard5_btn5"
+            android:layout_marginLeft="47px" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn7"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="7"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="48px"
+            android:layout_below="@id/keyboard5_btn4"
+            android:layout_marginTop="15px"/>
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn8"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="8"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_below="@id/keyboard5_btn5"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@id/keyboard5_btn7"
+            android:layout_marginLeft="48px" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn9"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:text="9"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_below="@id/keyboard5_btn6"
+            android:layout_marginTop="15px"
+            android:layout_toRightOf="@id/keyboard5_btn8"
+            android:layout_marginLeft="47px" />
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btn0"
+            android:layout_width="176px"
+            android:layout_height="125px"
+            android:text="0"
+            android:textSize="75px"
+            android:textColor="#333F48"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:layout_below="@id/keyboard5_btn8"
+            android:layout_marginTop="15px"
+            android:layout_alignLeft="@id/keyboard5_btn8"
+            android:layout_alignRight="@id/keyboard5_btn8"/>
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btnDelete"
+            android:layout_width="176px"
+            android:layout_height="113px"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:background="@drawable/keyboard5_button_ripple_1"
+            android:foreground="@drawable/keyboard5_icon_delete"
+            android:foregroundGravity="fill"
+            android:layout_marginTop="15px"
+            android:layout_below="@id/keyboard5_btn0"
+            android:layout_alignLeft="@id/keyboard5_btn0"
+            android:layout_alignRight="@id/keyboard5_btn0"/>
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btnCancel"
+            android:layout_width="176px"
+            android:layout_height="236px"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:stateListAnimator="@null"
+            android:background="@drawable/keyboard5_button_ripple_2"
+            android:foreground="@drawable/keyboard5_icon_cancel"
+            android:foregroundGravity="fill"
+            android:layout_marginTop="38px"
+            android:layout_marginLeft="48px"
+            android:layout_below="@id/keyboard5_btn7"
+            android:layout_alignParentLeft="true"/>
+
+        <android.widget.Button
+            android:id="@+id/keyboard5_btnDone"
+            android:layout_width="176px"
+            android:layout_height="236px"
+            android:longClickable="false"
+            android:soundEffectsEnabled="false"
+            android:stateListAnimator="@null"
+            android:background="@drawable/keyboard5_button_ripple_3"
+            android:foreground="@drawable/keyboard5_icon_done"
+            android:foregroundGravity="fill"
+            android:layout_marginTop="38px"
+            android:layout_marginRight="48px"
+            android:layout_below="@id/keyboard5_btn9"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -8,6 +8,7 @@ import { NativeModules, Platform } from 'react-native'
  * Native Method for Printer
  */
 interface Z500PrinterLibrary {
+  connectPayService: () => Promise<boolean>
   connect: () => Promise<boolean>
   disconnect: () => Promise<void>
   printerInit: () => Promise<boolean>
@@ -149,6 +150,18 @@ export type PrinterInfo = NativePrinterInfo & {
 export type PrintImageType = 'binary' | 'grayscale'
 export type BarType = 'line' | 'double' | 'dots' | 'wave' | 'plus' | 'star'
 
+//Z500
+/**
+ * connect printer
+ *
+ * @example
+ * await Z500PrinterLibrary.connectPayService()
+ */
+const connectPayService = Platform.select<() => Promise<boolean>>({
+  android: () => z500PrinterLibrary.connectPayService(),
+  default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
+})
+
 /**
  * connect printer
  *
@@ -173,6 +186,20 @@ const printerInit = Platform.select<() => Promise<boolean>>({
   android: () => z500PrinterLibrary.printerInit(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
+
+
+
+//Z500
+export const prepareZ500 = async () => {
+  try {
+    console.log('prepareZ500 vai chamar connectPayService')
+    await connectPayService()
+    return true
+  } catch (error) {
+    return Promise.reject('prepareZ500 FALHOU!!! ' + error.message)
+  }
+}
+
 
 /**
  * prepare
