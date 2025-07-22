@@ -1,4 +1,4 @@
-package com.sunmiprinterlibrary
+package com.z500printerlibrary
 
 import android.app.Activity
 import android.content.Context
@@ -15,7 +15,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
  * @see
  * https://developer.sunmi.com/docs/en-US/xeghjk491/ciceghjk502
  */
-class SunmiScannerLibraryModule(reactContext: ReactApplicationContext) :
+class Z500ScannerLibraryModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   private val context = getReactApplicationContext()
@@ -53,7 +53,7 @@ class SunmiScannerLibraryModule(reactContext: ReactApplicationContext) :
   }
 
   companion object {
-    const val NAME = "SunmiScannerLibrary"
+    const val NAME = "Z500ScannerLibrary"
   }
 
   @ReactMethod

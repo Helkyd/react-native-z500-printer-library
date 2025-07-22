@@ -78,9 +78,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sunmiprinterlibraryexample"
+    namespace "com.z500printerlibraryexample"
     defaultConfig {
-        applicationId "com.sunmiprinterlibraryexample"
+        applicationId "com.z500printerlibraryexample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

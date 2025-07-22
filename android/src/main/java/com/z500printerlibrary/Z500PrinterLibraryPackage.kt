@@ -1,15 +1,15 @@
-package com.sunmiprinterlibrary
+package com.z500printerlibrary
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 
-class SunmiPrinterLibraryPackage : ReactPackage {
+class Z500PrinterLibraryPackage : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
     return listOf(
-      SunmiPrinterLibraryModule(reactContext),
-      SunmiScannerLibraryModule(reactContext)
+      Z500PrinterLibraryModule(reactContext),
+      Z500ScannerLibraryModule(reactContext)
       )
   }
 

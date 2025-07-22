@@ -1,4 +1,4 @@
-package com.sunmiprinterlibrary
+package com.z500printerlibrary
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,11 +18,11 @@ import com.sunmi.peripheral.printer.SunmiPrinterService
 import com.sunmi.peripheral.printer.WoyouConsts
 
 
-class SunmiPrinterLibraryModule(reactContext: ReactApplicationContext) :
+class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   private var printerService: SunmiPrinterService? = null
- 
+
   init {}
 
   override fun getName(): String {
@@ -30,7 +30,7 @@ class SunmiPrinterLibraryModule(reactContext: ReactApplicationContext) :
   }
 
   companion object {
-    const val NAME = "SunmiPrinterLibrary"
+    const val NAME = "Z500PrinterLibrary"
   }
 
   @ReactMethod
@@ -412,7 +412,7 @@ class SunmiPrinterLibraryModule(reactContext: ReactApplicationContext) :
     validatePrinterService(promise)
     try {
       val callback = makeInnerResultCallback(promise, "native#printColumnsString is failed.")
-      
+
       var _texts = mutableListOf<String>()
       for (i in 0..(texts.size()-1)){
         val s = texts.getString(i)

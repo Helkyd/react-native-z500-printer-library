@@ -7,7 +7,7 @@ import {
   Text,
   DeviceEventEmitter,
 } from 'react-native'
-import * as SunmiPrinterLibrary from '@mitsuharu/react-native-sunmi-printer-library'
+import * as Z500PrinterLibrary from '@Helkyd/react-native-z500-printer-library'
 import { Button } from './components/Button'
 import { useToast } from 'react-native-toast-notifications'
 import {
@@ -53,7 +53,7 @@ const Component: React.FC<ComponentProps> = ({
       <ScrollView style={styles.scrollView}>
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>
-            @mitsuharu/react-native-sunmi-printer-library
+            @Helkyd/react-native-z500-printer-library
           </Text>
           <Button text="[MUST] prepare" onPress={onPressPrepare} />
           <Button
@@ -90,7 +90,7 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrepare = useCallback(async () => {
     try {
-      const isPrepared: boolean = await SunmiPrinterLibrary.prepare()
+      const isPrepared: boolean = await Z500PrinterLibrary.prepare()
       console.log(`isPrepared is ${isPrepared}`)
 
       const {
@@ -100,7 +100,7 @@ const Container: React.FC<Props> = () => {
         printerModal,
         paperWidth,
         pixelWidth,
-      } = await SunmiPrinterLibrary.getPrinterInfo()
+      } = await Z500PrinterLibrary.getPrinterInfo()
       console.log(`serialNumber is ${serialNumber}`)
       console.log(`printerVersion is ${printerVersion}`)
       console.log(`serviceVersion is ${serviceVersion}`)
@@ -108,10 +108,10 @@ const Container: React.FC<Props> = () => {
       console.log(`paperWidth is ${paperWidth}`)
       console.log(`pixelWidth is ${pixelWidth}`)
 
-      const printedLength = await SunmiPrinterLibrary.getPrintedLength()
+      const printedLength = await Z500PrinterLibrary.getPrintedLength()
       console.log(`printedLength is ${printedLength}`)
 
-      const { value, description } = await SunmiPrinterLibrary.getPrinterState()
+      const { value, description } = await Z500PrinterLibrary.getPrinterState()
       console.log(`getPrinterState is (${value}, ${description}).`)
 
       toast.show('Prepare is OK')
@@ -123,11 +123,11 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintSelfChecking = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Self-Checking')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Self-Checking')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printSelfChecking()
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printSelfChecking()
+      await Z500PrinterLibrary.lineWrap(1)
     } catch (error) {
       console.warn(error)
       toast.show(`onPressPrintSelfChecking is failed. ${error}`)
@@ -136,16 +136,16 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintText = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Text (await)')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Text (await)')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printText(sampleTextEn)
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText(sampleTextEn)
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printText(sampleTextJa)
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText(sampleTextJa)
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.lineWrap(3)
+      await Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`PrintText is failed. ${error}`)
@@ -154,21 +154,21 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintTextAwait = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Text (await)')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Text (await)')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printText('0 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('1 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('2 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('3 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('4 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('5 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('6 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('7 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('8 ' + sampleTextHelloWorld)
-      await SunmiPrinterLibrary.printText('9 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('0 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('1 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('2 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('3 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('4 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('5 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('6 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('7 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('8 ' + sampleTextHelloWorld)
+      await Z500PrinterLibrary.printText('9 ' + sampleTextHelloWorld)
 
-      await SunmiPrinterLibrary.lineWrap(3)
+      await Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`PrintText is failed. ${error}`)
@@ -177,21 +177,21 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintTextAsync = useCallback(async () => {
     try {
-      SunmiPrinterLibrary.printText('Print Text (no await)')
-      SunmiPrinterLibrary.lineWrap(1)
+      Z500PrinterLibrary.printText('Print Text (no await)')
+      Z500PrinterLibrary.lineWrap(1)
 
-      SunmiPrinterLibrary.printText('0 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('1 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('2 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('3 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('4 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('5 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('6 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('7 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('8 ' + sampleTextHelloWorld)
-      SunmiPrinterLibrary.printText('9 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('0 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('1 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('2 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('3 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('4 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('5 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('6 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('7 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('8 ' + sampleTextHelloWorld)
+      Z500PrinterLibrary.printText('9 ' + sampleTextHelloWorld)
 
-      SunmiPrinterLibrary.lineWrap(3)
+      Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`PrintText is failed. ${error}`)
@@ -202,19 +202,19 @@ const Container: React.FC<Props> = () => {
     try {
       const boldOn = new Uint8Array([0x1b, 0x45, 0x01])
       const boldOnBase64 = Buffer.from(boldOn).toString('base64')
-      await SunmiPrinterLibrary.sendRAWData(boldOnBase64)
+      await Z500PrinterLibrary.sendRAWData(boldOnBase64)
 
-      await SunmiPrinterLibrary.printText('\'sendRAWData\' sets Bold to ON')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('\'sendRAWData\' sets Bold to ON')
+      await Z500PrinterLibrary.lineWrap(1)
 
       const boldOff = new Uint8Array([0x1b, 0x45, 0x00])
       const boldOffBase64 = Buffer.from(boldOff).toString('base64')
-      await SunmiPrinterLibrary.sendRAWData(boldOffBase64)
+      await Z500PrinterLibrary.sendRAWData(boldOffBase64)
 
-      await SunmiPrinterLibrary.printText('\'sendRAWData\' sets Bold to OFF')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('\'sendRAWData\' sets Bold to OFF')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.lineWrap(3)
+      await Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`onPressSendRAWData is failed. ${error}`)
@@ -223,8 +223,8 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintTable = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Table')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Table')
+      await Z500PrinterLibrary.lineWrap(1)
 
       const {
         serialNumber,
@@ -233,80 +233,80 @@ const Container: React.FC<Props> = () => {
         printerModal,
         paperWidth,
         pixelWidth,
-      } = await SunmiPrinterLibrary.getPrinterInfo()
+      } = await Z500PrinterLibrary.getPrinterInfo()
 
       const widths = [30, 25]
-      await SunmiPrinterLibrary.printColumnsString(['name', 'value'], widths, [
+      await Z500PrinterLibrary.printColumnsString(['name', 'value'], widths, [
         'center',
         'center',
       ])
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['serial number:', serialNumber],
         widths,
         ['left', 'left']
       )
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['printer version:', printerVersion],
         widths,
         ['left', 'left']
       )
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['service version:', serviceVersion],
         widths,
         ['left', 'left']
       )
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['printer modal:', printerModal],
         widths,
         ['left', 'left']
       )
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['paper width:', paperWidth],
         widths,
         ['left', 'left']
       )
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['pixel width:', `${pixelWidth}`],
         widths,
         ['left', 'left']
       )
 
-      SunmiPrinterLibrary.lineWrap(1)
-      await SunmiPrinterLibrary.printHR('plus')
+      Z500PrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printHR('plus')
 
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['', 'apple', 'mellon', 'banana'],
         [8, 8, 8, 8],
         ['left', 'center', 'center', 'center']
       )
 
-      await SunmiPrinterLibrary.printHR('double')
+      await Z500PrinterLibrary.printHR('double')
 
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['color', 'red', 'green', 'yellow'],
         [8, 8, 8, 8],
         ['left', 'center', 'center', 'center']
       )
 
-      await SunmiPrinterLibrary.printHR('line')
+      await Z500PrinterLibrary.printHR('line')
 
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['taste', 'good', 'good', 'good'],
         [8, 8, 8, 8],
         ['left', 'center', 'center', 'center']
       )
 
-      await SunmiPrinterLibrary.printHR('wave')
+      await Z500PrinterLibrary.printHR('wave')
 
-      await SunmiPrinterLibrary.printColumnsString(
+      await Z500PrinterLibrary.printColumnsString(
         ['shape', 'small', 'ball', 'crescent'],
         [8, 8, 6, 10],
         ['left', 'center', 'center', 'center']
       )
 
-      await SunmiPrinterLibrary.printHR('star')
+      await Z500PrinterLibrary.printHR('star')
 
-      await SunmiPrinterLibrary.lineWrap(3)
+      await Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`PrintText is failed. ${error}`)
@@ -315,43 +315,43 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintChangingStyle = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print changing styles')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print changing styles')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.setAlignment('right')
-      await SunmiPrinterLibrary.printText('right')
+      await Z500PrinterLibrary.setAlignment('right')
+      await Z500PrinterLibrary.printText('right')
 
-      await SunmiPrinterLibrary.setAlignment('center')
-      await SunmiPrinterLibrary.printText('center')
+      await Z500PrinterLibrary.setAlignment('center')
+      await Z500PrinterLibrary.printText('center')
 
-      await SunmiPrinterLibrary.setAlignment('left')
-      await SunmiPrinterLibrary.printText('left')
+      await Z500PrinterLibrary.setAlignment('left')
+      await Z500PrinterLibrary.printText('left')
 
-      await SunmiPrinterLibrary.setTextStyle('bold', true)
-      await SunmiPrinterLibrary.printText('bold')
-      await SunmiPrinterLibrary.setTextStyle('bold', false)
+      await Z500PrinterLibrary.setTextStyle('bold', true)
+      await Z500PrinterLibrary.printText('bold')
+      await Z500PrinterLibrary.setTextStyle('bold', false)
 
-      await SunmiPrinterLibrary.setTextStyle('italic', true)
-      await SunmiPrinterLibrary.printText('italic')
-      await SunmiPrinterLibrary.setTextStyle('italic', false)
+      await Z500PrinterLibrary.setTextStyle('italic', true)
+      await Z500PrinterLibrary.printText('italic')
+      await Z500PrinterLibrary.setTextStyle('italic', false)
 
-      await SunmiPrinterLibrary.setParagraphStyle('leftSpacing', 50)
-      await SunmiPrinterLibrary.printText('leftSpacing sets 50.')
-      await SunmiPrinterLibrary.setParagraphStyle('leftSpacing', 0)
+      await Z500PrinterLibrary.setParagraphStyle('leftSpacing', 50)
+      await Z500PrinterLibrary.printText('leftSpacing sets 50.')
+      await Z500PrinterLibrary.setParagraphStyle('leftSpacing', 0)
 
-      await SunmiPrinterLibrary.setFontSize(16)
-      await SunmiPrinterLibrary.printText('font size is 16')
+      await Z500PrinterLibrary.setFontSize(16)
+      await Z500PrinterLibrary.printText('font size is 16')
 
-      await SunmiPrinterLibrary.setFontSize(32)
-      await SunmiPrinterLibrary.printText('font size is 32')
+      await Z500PrinterLibrary.setFontSize(32)
+      await Z500PrinterLibrary.printText('font size is 32')
 
-      await SunmiPrinterLibrary.setDefaultFontSize()
-      await SunmiPrinterLibrary.printText(
-        `font size is default (${SunmiPrinterLibrary.defaultFontSize})`
+      await Z500PrinterLibrary.setDefaultFontSize()
+      await Z500PrinterLibrary.printText(
+        `font size is default (${Z500PrinterLibrary.defaultFontSize})`
       )
 
-      await SunmiPrinterLibrary.resetPrinterStyle()
-      await SunmiPrinterLibrary.lineWrap(3)
+      await Z500PrinterLibrary.resetPrinterStyle()
+      await Z500PrinterLibrary.lineWrap(3)
     } catch (error) {
       console.warn(error)
       toast.show(`PrintText is failed. ${error}`)
@@ -360,26 +360,26 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintBarcode = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Barcode')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Barcode')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printText('(1) Barcode')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('(1) Barcode')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printBarcode(
+      await Z500PrinterLibrary.printBarcode(
         '1234567890',
         'CODE128',
         162,
         2,
         'textUnderBarcode'
       )
-      await SunmiPrinterLibrary.lineWrap(2)
+      await Z500PrinterLibrary.lineWrap(2)
 
-      await SunmiPrinterLibrary.printText('(2) QR code')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('(2) QR code')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printQRCode('Hello World', 8, 'middle')
-      await SunmiPrinterLibrary.lineWrap(4)
+      await Z500PrinterLibrary.printQRCode('Hello World', 8, 'middle')
+      await Z500PrinterLibrary.lineWrap(4)
     } catch (error) {
       console.warn(error)
       toast.show(`onPressPrintImage is failed. ${error}`)
@@ -388,20 +388,20 @@ const Container: React.FC<Props> = () => {
 
   const onPressPrintImage = useCallback(async () => {
     try {
-      await SunmiPrinterLibrary.printText('Print Image')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('Print Image')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printText('(1) binary')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('(1) binary')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printImage(sampleImageBase64, 384, 'binary')
-      await SunmiPrinterLibrary.lineWrap(2)
+      await Z500PrinterLibrary.printImage(sampleImageBase64, 384, 'binary')
+      await Z500PrinterLibrary.lineWrap(2)
 
-      await SunmiPrinterLibrary.printText('(2) grayscale')
-      await SunmiPrinterLibrary.lineWrap(1)
+      await Z500PrinterLibrary.printText('(2) grayscale')
+      await Z500PrinterLibrary.lineWrap(1)
 
-      await SunmiPrinterLibrary.printImage(sampleImageBase64, 384, 'grayscale')
-      await SunmiPrinterLibrary.lineWrap(4)
+      await Z500PrinterLibrary.printImage(sampleImageBase64, 384, 'grayscale')
+      await Z500PrinterLibrary.lineWrap(4)
     } catch (error) {
       console.warn(error)
       toast.show(`onPressPrintImage is failed. ${error}`)
@@ -410,7 +410,7 @@ const Container: React.FC<Props> = () => {
 
   const onPressScan = useCallback(async () => {
     try {
-      const result = await SunmiPrinterLibrary.scan()
+      const result = await Z500PrinterLibrary.scan()
       console.warn(`onPressScan is ${result}`)
     } catch (error) {
       console.warn(error)
@@ -420,44 +420,44 @@ const Container: React.FC<Props> = () => {
 
   useEffect(() => {
     DeviceEventEmitter.addListener(
-      SunmiPrinterLibrary.EventType.onScanSuccess,
+      Z500PrinterLibrary.EventType.onScanSuccess,
       (message) => {
         console.log(`[onScanSuccess] ${message}`)
       }
     )
     DeviceEventEmitter.addListener(
-      SunmiPrinterLibrary.EventType.onScanFailed,
+      Z500PrinterLibrary.EventType.onScanFailed,
       (message) => {
         console.log(`[onScanFailed] ${message}`)
       }
     )
     return () => {
       DeviceEventEmitter.removeAllListeners(
-        SunmiPrinterLibrary.EventType.onScanSuccess
+        Z500PrinterLibrary.EventType.onScanSuccess
       )
       DeviceEventEmitter.removeAllListeners(
-        SunmiPrinterLibrary.EventType.onScanFailed
+        Z500PrinterLibrary.EventType.onScanFailed
       )
     }
   }, [])
 
   const onPressTransaction = useCallback(async () => {
     try {
-      const hr = await SunmiPrinterLibrary.hr('line')
+      const hr = await Z500PrinterLibrary.hr('line')
 
-      await SunmiPrinterLibrary.enterPrinterBuffer(true)
+      await Z500PrinterLibrary.enterPrinterBuffer(true)
 
-      SunmiPrinterLibrary.printText('Transaction Test 0')
-      SunmiPrinterLibrary.printText(hr)
+      Z500PrinterLibrary.printText('Transaction Test 0')
+      Z500PrinterLibrary.printText(hr)
 
-      await SunmiPrinterLibrary.commitPrinterBuffer()
+      await Z500PrinterLibrary.commitPrinterBuffer()
 
-      SunmiPrinterLibrary.printText('Transaction Test 1')
-      SunmiPrinterLibrary.printText('Transaction Test 2')
-      SunmiPrinterLibrary.printText('Transaction Test 3')
-      SunmiPrinterLibrary.lineWrap(4)
+      Z500PrinterLibrary.printText('Transaction Test 1')
+      Z500PrinterLibrary.printText('Transaction Test 2')
+      Z500PrinterLibrary.printText('Transaction Test 3')
+      Z500PrinterLibrary.lineWrap(4)
 
-      await SunmiPrinterLibrary.exitPrinterBuffer(true)
+      await Z500PrinterLibrary.exitPrinterBuffer(true)
     } catch (error) {
       console.warn(error)
     }

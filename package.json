@@ -1,7 +1,7 @@
 {
-  "name": "@mitsuharu/react-native-sunmi-printer-library",
+  "name": "@Helkyd/react-native-z500-printer-library",
   "version": "2.3.0",
-  "description": "React Native module that support SUNMI mobile printer devices.",
+  "description": "React Native module that support Z500 CIONTEK mobile printer devices.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -26,7 +26,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-sunmi-printer-library-example",
+    "example": "yarn workspace react-native-z500-printer-library-example",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -37,16 +37,16 @@
   "keywords": [
     "react-native",
     "android",
-    "sunmi",
+    "z500",
     "printer"
   ],
-  "repository": "https://github.com/mitsuharu/react-native-sunmi-printer-library",
-  "author": "Mitsuharu Emoto <mthr1982@gmail.com> (https://github.com/mitsuharu)",
+  "repository": "https://github.com/Helkyd/react-native-z500-printer-library",
+  "author": "Helio de Jesus <hcesar@gmail.com> (https://github.com/Helkyd)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mitsuharu/react-native-sunmi-printer-library/issues"
+    "url": "https://github.com/Helkyd/react-native-z500-printer-library/issues"
   },
-  "homepage": "https://github.com/mitsuharu/react-native-sunmi-printer-library#readme",
+  "homepage": "https://github.com/Helkyd/react-native-z500-printer-library#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

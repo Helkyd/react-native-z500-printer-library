@@ -1,4 +1,4 @@
-package com.sunmiprinterlibraryexample
+package com.z500printerlibraryexample
 
 import android.app.Application
 import com.facebook.react.PackageList

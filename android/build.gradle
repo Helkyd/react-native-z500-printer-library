@@ -1,6 +1,6 @@
 buildscript {
   // Buildscript is evaluated before everything else so we can't use getExtOrDefault
-  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["SunmiPrinterLibrary_kotlinVersion"]
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["Z500PrinterLibrary_kotlinVersion"]
 
   repositories {
     google()
@@ -26,11 +26,11 @@ if (isNewArchitectureEnabled()) {
 }
 
 def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["SunmiPrinterLibrary_" + name]
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["Z500PrinterLibrary_" + name]
 }
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["SunmiPrinterLibrary_" + name]).toInteger()
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Z500PrinterLibrary_" + name]).toInteger()
 }
 
 def supportsNamespace() {
@@ -43,9 +43,9 @@ def supportsNamespace() {
 }
 
 android {
-  namespace = "com.sunmiprinterlibrary"
+  namespace = "com.z500printerlibrary"
   if (supportsNamespace()) {
-    namespace "com.sunmiprinterlibrary"
+    namespace "com.z500printerlibrary"
 
     sourceSets {
       main {
