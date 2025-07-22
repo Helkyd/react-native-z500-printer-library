@@ -2845,10 +2845,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/typescript-config@npm:0.79.2":
-  version: 0.79.2
-  resolution: "@react-native/typescript-config@npm:0.79.2"
-  checksum: 10/ca52b9297db02e5e7db0343da71faca8aab85ce1b434a811ea1f864bcdb7089f9c8be393e1bce0e855eeeca67e9bcfdd56a457b64d55f495aa9fc3fa49cb92f9
+"@react-native/typescript-config@npm:0.80.1":
+  version: 0.80.1
+  resolution: "@react-native/typescript-config@npm:0.80.1"
+  checksum: 10/e427edeefd9e5be9ee8c7d247243ed231973662cf2904741c24534aab3620a51159fe38cd1907f1ea90ce41a33e1266e34e414918aff1b30b444bac26db23e6d
   languageName: node
   linkType: hard
 
@@ -10130,7 +10130,7 @@ __metadata:
     "@react-native/babel-preset": "npm:0.79.2"
     "@react-native/eslint-config": "npm:0.79.2"
     "@react-native/metro-config": "npm:0.79.2"
-    "@react-native/typescript-config": "npm:0.79.2"
+    "@react-native/typescript-config": "npm:0.80.1"
     "@types/jest": "npm:^29.5.14"
     "@types/react": "npm:^19.1.2"
     "@types/react-test-renderer": "npm:^19.1.0"
