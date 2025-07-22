@@ -82,6 +82,7 @@ interface Z500PrinterLibrary {
  */
 interface Z500ScannerLibrary {
   scan: () => Promise<string>
+  z500Scan: () => Promise<string>
 }
 
 const z500PrinterLibrary: Z500PrinterLibrary =
@@ -874,8 +875,9 @@ export const printHR = Platform.select<(barType: BarType) => Promise<void>>({
  *```
  *
  */
+ //Z500
 export const scan = Platform.select<() => Promise<string>>({
-  android: () => z500ScannerLibrary.scan(),
+  android: () => z500ScannerLibrary.z500Scan(),
   default: () => Promise.reject(OS_DOES_NOT_SUPPORT),
 })
 

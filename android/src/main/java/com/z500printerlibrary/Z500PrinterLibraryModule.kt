@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Looper
 import android.os.Build;
 
+import android.content.ComponentName;
 import android.content.Intent;
 
 //import android.content.Context;
@@ -64,22 +65,22 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
 
   //Z500
 
-  const val PRINT_TEST: Int = 0
-  const val PRINT_UNICODE: Int = 1
-  const val PRINT_BMP: Int = 2
-  const val PRINT_BARCODE: Int = 4
-  const val PRINT_CYCLE: Int = 5
-  const val PRINT_LONGER: Int = 7
-  const val PRINT_OPEN: Int = 8
+  private val PRINT_TEST: Int = 0
+  private  val PRINT_UNICODE: Int = 1
+  private  val PRINT_BMP: Int = 2
+  private  val PRINT_BARCODE: Int = 4
+  private  val PRINT_CYCLE: Int = 5
+  private val PRINT_LONGER: Int = 7
+  private val PRINT_OPEN: Int = 8
 
-  const val PRINT_LAB_SINGLE: Int = 9
-  const val PRINT_LAB_CONTINUE: Int = 10
-  const val PRINT_LAB_BAR: Int = 11
-  const val PRINT_LAB_BIT: Int = 12
+  private val PRINT_LAB_SINGLE: Int = 9
+  private val PRINT_LAB_CONTINUE: Int = 10
+  private val PRINT_LAB_BAR: Int = 11
+  private val PRINT_LAB_BIT: Int = 12
 
-  const val voltage_level = 0
-  const val BatteryV = 0
-  const val mode_flag = 0
+  private var voltage_level = 0
+  private val BatteryV = 0
+  private val mode_flag = 0
 
 
   public var basicOpt: SysBaseOpt? = null
@@ -97,9 +98,9 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
 
   public var content = "1234567890";
 
-  //private val listeners = ConcurrentHashMap.newKeySet<OnServiceConnectListener>()
+  public var RESULT_CODE = 0
+
   private val listeners = mutableSetOf<OnServiceConnectListener>()
-  //private val handler: Handler = Handler()
   private val handler: Handler by lazy {
     Handler(Looper.getMainLooper())
   }
@@ -343,14 +344,15 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
         Log.e("Z500", "Lib_PrnCheckStatus fail, ret = " + pStatus);
         promise.reject("Z500","Error, No Paper")
         return;
-      } else if (ret == -2) {
+      } else if (pStatus == -2) {
         RESULT_CODE = -1;
         Log.e("Z500", "Lib_PrnCheckStatus fail, ret = " + pStatus);
         promise.reject("Z500","Error, Printer Too Hot ");
         return;
-      } else if (ret == -3) {
+      } else if (pStatus == -3) {
         RESULT_CODE = -1;
         //TO REVIEW
+        /*
         voltage_level = intent.getExtras().getInt("level");
         Log.e("wbw", "current  = " + voltage_level);
         BatteryV = intent.getIntExtra("voltage", 0);  //电池电压
@@ -361,6 +363,9 @@ class Z500PrinterLibraryModule(reactContext: ReactApplicationContext) :
 
         Log.e("Z500", "voltage = " + (BatteryV * 2));
         promise.reject("Battery less :" + (BatteryV * 2));
+
+         */
+        promise.reject("Battery less :?????" );
         return;
       }
 
