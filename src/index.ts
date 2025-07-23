@@ -1,8 +1,5 @@
 import { NativeModules, Platform } from 'react-native'
 
-/**
- * see: SUNMI Developers <https://developer.sunmi.com/en-US/>
- */
 
 /**
  * Native Method for Printer
