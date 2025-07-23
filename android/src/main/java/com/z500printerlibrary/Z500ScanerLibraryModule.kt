@@ -164,39 +164,36 @@ class Z500ScannerLibraryModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun z500Scan(promise: Promise) {
     val activity: Activity? = currentActivity
-    Log.e("Z500-Scanner","activity: $activity")
+    Log.e("Z500-Scanner", "activity: $activity")
+
     if (activity == null) {
       sendEventFailed("scan is failed. There is not an activity.")
       return
     }
+
     try {
       mPromise = promise
-      /*
-      val intent = Intent("ACTION_BAR_SCANCFG")
-      //intent.setPackage("com.sunmi.sunmiqrcodescanner")
-      Log.e("Z500-Scanner","Extra Scan Power")
-      intent.putExtra("EXTRA_SCAN_POWER", 1);
-      intent.putExtra("EXTRA_SCAN_MODE", 3);//set api result mode
-      //Log.e("Z500-Scanner","Put Extra Play Sound")
-      //intent.putExtra("PLAY_SOUND", true)
-      //activity.startActivityForResult(intent, REQUEST_CODE)
-      activity.sendBroadcast(intent)
 
-       */
+      // 1. First send the configuration broadcast
+      val configIntent = Intent("ACTION_BAR_SCANCFG").apply {
+        putExtra("EXTRA_SCAN_POWER", 1)
+        putExtra("EXTRA_SCAN_AUTOENT", 0)
+        putExtra("EXTRA_SCAN_MODE", 3)
+      }
+      activity.sendBroadcast(configIntent)
 
-      //Start scanning
-      val startIntent = Intent("ACTION_BAR_TRIGSCAN")
-      //startIntent.putExtra("EXTRA_SCAN_POWER", 1);
-      startIntent.putExtra("EXTRA_SCAN_MODE", 3);//set api result mode
-      startIntent.putExtra("timeout", 60) // Units per second,and Maximum 9
-      Log.e("Z500-Scanner","Start Scan...")
-
+      // 2. Then start the scan
+      val startIntent = Intent("ACTION_BAR_TRIGSCAN").apply {
+        putExtra("EXTRA_SCAN_MODE", 3) // set api result mode
+        putExtra("timeout", 60) // Units per second, maximum 9
+      }
+      Log.e("Z500-Scanner", "Start Scan...")
       activity.sendBroadcast(startIntent)
-
 
     } catch (e: Exception) {
       sendEventFailed("scan is failed. " + e.message)
     }
+
 
   }
 
